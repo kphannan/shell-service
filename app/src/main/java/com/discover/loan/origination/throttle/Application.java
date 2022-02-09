@@ -1,20 +1,23 @@
 package com.discover.loan.origination.throttle;
 
 import com.discover.GeneratedIgnoreCoverage;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 
 /**
  * Spring Boot Service application.
  */
-public class Application
+@SpringBootApplication
+@EnableJpaRepositories( "com.discover.loan" )
+public final class Application
 {
-    /**
-     * Temporary comment to keep PMD quiet.
-     *
-     * @return a constant string.
-     */
-    public String getGreeting()
+
+    private Application()
     {
-        return "Hello World!";
+        // Prevent instantiation other than by main().
     }
 
     /**
@@ -25,6 +28,6 @@ public class Application
     @GeneratedIgnoreCoverage
     public static void main( final String[] args )
     {
-        System.out.println( new Application().getGreeting() );
+        SpringApplication.run( Application.class, args );
     }
 }

@@ -2,7 +2,6 @@ package com.discover.loan.origination.throttle;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -25,11 +24,6 @@ class SegmentationKindTest
 
                   , () -> assertFalse( itemUnderTest.isBroadMarket() )
                   , () -> assertFalse( itemUnderTest.isUnsolicited() )
-                  // Protect against both states being set
-                //   , () -> assertNotEquals(  itemUnderTest.isCardMember()
-                //                           , itemUnderTest.isBroadMarket() )
-                //   , () -> assertNotEquals(  itemUnderTest.isSolicited()
-                //                           , itemUnderTest.isUnsolicited() )
         );
     }
 

@@ -8,9 +8,15 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+
+/**
+ * Custom annotation that can be applied to a method or class to
+ * be removed from code coverage analysis.  Use only when necessary.
+ */
 @Documented
-@Retention(RUNTIME)
-@Target({TYPE, METHOD})
+@Retention( RUNTIME )
+@Target( { TYPE, METHOD } )
 public @interface GeneratedIgnoreCoverage
 {
+    // no content needed
 }
