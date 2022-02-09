@@ -131,3 +131,14 @@ checkstyleMain {
 checkstyleTest {
     source = 'src/test/java'
 }
+
+
+// ----- PMD -----
+pmd {
+    consoleOutput = false
+    ignoreFailures = true       // Don't interrupt the build
+    toolVersion = "${pmdVersion}"
+    ruleSetFiles = files("${rootDir}/config/pmd/pmd.xml")
+    ruleSets = []
+}
+

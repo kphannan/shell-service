@@ -5,6 +5,11 @@ package com.discover.loan;
  */
 public class Application
 {
+    /**
+     * Temporary comment to keep PMD quiet.
+     *
+     * @return a constant string.
+     */
     public String getGreeting()
     {
         return "Hello World!";

@@ -1,15 +1,19 @@
 
 package com.discover.loan;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.Test;
+
+/**
+ * REST service application unit test.
+ */
 class ApplicationTest
 {
     @Test
     void appHasAGreeting()
     {
-        Application classUnderTest = new Application();
+        final Application classUnderTest = new Application();
         assertNotNull( classUnderTest.getGreeting(), "app should have a greeting" );
     }
 }
