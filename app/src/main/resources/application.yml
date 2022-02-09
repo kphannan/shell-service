@@ -5,3 +5,15 @@ spring:
 
 
 
+
+throttle:
+  modelConfiguration:
+    - segment: CARDMEMBER_SOLICITED
+      targetPercent: 30
+    - segment: CARDMEMBER_UNSOLICITED
+      targetPercent: 40
+    - segment: BROAD_MARKET_SOLICITED
+      targetPercent: 50
+    - segment: broad_market_unsolicited
+      targetPercent: 60
+
