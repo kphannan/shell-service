@@ -1,4 +1,4 @@
-package com.discover.loan;
+package com.discover.loan.origination.throttle;
 
 /**
  * Spring Boot Service application.

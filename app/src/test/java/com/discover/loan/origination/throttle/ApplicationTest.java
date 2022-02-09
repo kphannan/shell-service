@@ -1,5 +1,5 @@
 
-package com.discover.loan;
+package com.discover.loan.origination.throttle;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
