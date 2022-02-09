@@ -66,15 +66,15 @@ plugins {
 
 
     // ===== Configuration Management =====
-    id "net.nemerosa.versioning" version "2.9.0"
-    id "com.gorylenko.gradle-git-properties" version "2.3.2"
-    id 'maven-publish'
+    // id "net.nemerosa.versioning" version "2.9.0"
+    // id "com.gorylenko.gradle-git-properties" version "2.3.2"
+    // id 'maven-publish'
 
     // ===== Documentation =====
-    id 'org.asciidoctor.convert' version '1.5.8'
+    // id 'org.asciidoctor.convert' version '1.5.8'
 
-    id 'project-report'
-    id 'build-dashboard'
+    // id 'project-report'
+    // id 'build-dashboard'
     // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
 
 }
@@ -89,13 +89,15 @@ repositories {
 
 dependencies {
     // This dependency is used by the application.
-    implementation 'com.google.guava:guava:30.1.1-jre'
+    // implementation 'com.google.guava:guava:30.1.1-jre'
 
     // ===== Quality Assurance =====
     // --- Static Analysis
     // --- PMD
     // --- Style
     // --- Unit testing
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     // --- Coverage
     // --- Mutation testing
     testRuntimeOnly( 'org.pitest:pitest-junit5-plugin:0.15' )
@@ -108,18 +110,40 @@ application {
     mainClass = 'com.discover.loan.Application'
 }
 
+group = 'com.discover.loan'
+
+sourceCompatibility = '17'
+targetCompatibility = "${sourceCompatibility}"
+
 
 // ===== Testing =====
 // --- Unit Testing
-testing {
-    suites {
-        // Configure the built-in test suite
-        test {
-            // Use JUnit Jupiter test framework
-            useJUnitJupiter('5.7.2')
-        }
+test {
+    // finalizedBy jacocoTestReport
+
+    // Use junit platform for unit tests
+    useJUnitPlatform()
+
+    jacoco {
+        excludes = [ '**/Application.*' ]
     }
 }
+
+check {
+    dependsOn {
+        jacocoTestCoverageVerification
+    }
+}
+
+// testing {
+//     suites {
+//         // Configure the built-in test suite
+//         test {
+//             // Use JUnit Jupiter test framework
+//             useJUnitJupiter('5.7.2')
+//         }
+//     }
+// }
 
 
 // ===== Static Code Analysis =====
@@ -152,3 +176,68 @@ pmd {
     ruleSets = []
 }
 
+
+// --- Coverage (Jacoco) ---
+
+// See this page for options https://reflectoring.io/jacoco/
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.0
+            }
+        }
+
+        rule {
+            limit {
+                counter = 'LINE'
+                value   = 'COVEREDRATIO'
+                minimum = 0.0
+            }
+        }
+
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['org.gradle.*']
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 0.0
+            }
+        }
+    }
+}
+
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                "com/discover/**/ExcludedPOJO.class"
+                // "com/discover/**/*DTO.*",
+                // "**/config/*"
+            ])
+        }))
+    }
+}
+
+
+// --- Mutation Tests
+pitest {
+    verbose = false
+    // testSourceSets = [sourceSets.test]
+    // mainSourceSets = [sourceSets.main]
+    targetClasses = ['com.discover.loan.*']  //by default "${project.group}.*"
+    // targetClasses = ['com.example.security.*']  //by default "${project.group}.*"
+    pitestVersion = "${pitVersion}" //not needed when a default PIT version should be used
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    withHistory = true
+    // mutators = ['DEFAULTS', 'STRONGER', 'ALL']
+    mutators = ['DEFAULTS', 'STRONGER' ]
+}

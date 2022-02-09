@@ -1,5 +1,7 @@
 package com.discover.loan.origination.throttle;
 
+import com.discover.GeneratedIgnoreCoverage;
+
 /**
  * Spring Boot Service application.
  */
@@ -20,6 +22,7 @@ public class Application
      *
      * @param args optional commandline arguments.
      */
+    @GeneratedIgnoreCoverage
     public static void main( final String[] args )
     {
         System.out.println( new Application().getGreeting() );
