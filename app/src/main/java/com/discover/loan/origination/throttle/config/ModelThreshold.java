@@ -2,6 +2,7 @@ package com.discover.loan.origination.throttle.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 
 import com.discover.GeneratedIgnoreCoverage;
@@ -35,6 +36,10 @@ public class ModelThreshold
     }
 
 
+    /**
+     * Processing of loaded configuration.
+     *   - Lookup named strategies, mapping to actual enum instances.
+     */
     @PostConstruct
     @GeneratedIgnoreCoverage
     @SuppressWarnings( "PMD.UnusedPrivateMethod" )  // Called automatically by the runtime system
@@ -42,10 +47,13 @@ public class ModelThreshold
     {
         if ( null != modelThresholds )
         {
-            for ( TargetThreshold t : modelThresholds )
+            for ( final TargetThreshold item : modelThresholds )
             {
-                t.segmentKind = SegmentationKind.valueOf( t.segment.trim().toUpperCase() );
+                item.segmentKind = SegmentationKind.valueOf( item.segment
+                                                                .trim()
+                                                                .toUpperCase( Locale.US ) );
             }
+
             modelThresholds.forEach( log::info );
         }
     }

@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**
+ * REST controller for application throttle.
+ */
 @RestController
 @RequestMapping( "/loan/origination/throttle/eligible" )
 public class ThrottleController
@@ -17,7 +21,7 @@ public class ThrottleController
     private final ThrottleRepository repository;
 
 
-    ThrottleController( ThrottleRepository repository )
+    ThrottleController( final ThrottleRepository repository )
     {
         this.repository = repository;
     }
@@ -28,6 +32,13 @@ public class ThrottleController
     // ----- Create -----
 
     // ----- Retrieve -----
+    /**
+     * Retrieve a paged list of all applications processed and their associated
+     * deceision data.
+     *
+     * @param paging the desired {@code Page}.
+     * @return the requested {@code Page} of results.  The page may contain no results.
+     */
     @GetMapping( path = "" )
     public ResponseEntity<Page<ApplicationThrottle>> all( final Pageable paging )
     {

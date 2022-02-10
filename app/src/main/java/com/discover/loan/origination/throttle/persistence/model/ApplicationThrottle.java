@@ -7,6 +7,10 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+
+/**
+ * Entity definition for the Throttle Status table.
+ */
 @Entity
 @Table( name = "app_throttle" )
 @Data

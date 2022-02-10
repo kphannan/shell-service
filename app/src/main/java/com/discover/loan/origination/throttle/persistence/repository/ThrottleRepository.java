@@ -5,6 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+
+/**
+ * Definition of access to the Throttle Repository table.
+ */
 public interface ThrottleRepository extends PagingAndSortingRepository<ApplicationThrottle, String>
 {
 

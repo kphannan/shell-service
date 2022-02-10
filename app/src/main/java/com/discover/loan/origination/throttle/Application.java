@@ -11,13 +11,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @SpringBootApplication
 @EnableJpaRepositories( "com.discover.loan" )
+// The main() entry point of the service, does not adhere to the PMD suggestions.
+@SuppressWarnings( { "PMD.UseUtilityClass" } )
 public class Application
 {
-
-    public Application()
-    {
-        // Prevent instantiation other than by main().
-    }
 
     /**
      * Service entry point.
