@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      relativeToChangelogFile: true
+      file: 000000001-Create-AppThrottle.yaml
+

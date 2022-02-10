@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 /**
  * Configuration.
  */
-@ConfigurationProperties( prefix = "throttle.model" )
+@ConfigurationProperties( prefix = "throttle" )
 @Component
 @RefreshScope
 @Data
@@ -42,6 +42,10 @@ public class ModelThreshold
     {
         if ( null != modelThresholds )
         {
+            for ( TargetThreshold t : modelThresholds )
+            {
+                t.segmentKind = SegmentationKind.valueOf( t.segment.trim().toUpperCase() );
+            }
             modelThresholds.forEach( log::info );
         }
     }
@@ -55,7 +59,7 @@ public class ModelThreshold
     public static class TargetThreshold
     {
         @Setter( AccessLevel.MODULE )
-        private String           segmentName;
+        private String           segment;
         @Setter( AccessLevel.MODULE )
         private SegmentationKind segmentKind;
         @Setter( AccessLevel.MODULE )

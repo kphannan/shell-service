@@ -27,6 +27,8 @@ buildscript {
         junitVersion               = '5.8.2'
         // --- Code coverage
         pitVersion                 = '1.7.3'
+        // --- BDD
+        karateVersion              = '1.1.0'
 
         // --- Documentation ---
         asciiDoctorVersion         = '1.5.6'
@@ -54,6 +56,7 @@ plugins {
     // --- Spring boot
     id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    // --- Stability
 
 
     // ===== Quality Assurance =====
@@ -111,11 +114,12 @@ dependencies {
     // --- Traceability
     // --- Instrumentation
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    // --- Stability
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // ===== Persistence =====
-    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // implementation 'org.liquibase:liquibase-core'
+    implementation 'org.liquibase:liquibase-core'
     // --- Database
     runtimeOnly 'com.h2database:h2'
     // runtimeOnly 'org.postgresql:postgresql'
@@ -132,7 +136,14 @@ dependencies {
     // --- Coverage
     // --- Mutation testing
     testRuntimeOnly( 'org.pitest:pitest-junit5-plugin:0.15' )
+    // --- BDD
+    testImplementation( "com.intuit.karate:karate-junit5:${karateVersion}" )
+
     // --- Reporting
+
+    // ===== Documentation =====
+    // --- Config properties
+    annotationProcessor( "org.springframework.boot:spring-boot-configuration-processor" )
 }
 
 dependencyManagement {
@@ -144,7 +155,7 @@ dependencyManagement {
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.discover.loan.Application'
+    mainClass = 'com.discover.loan.origination.throttle.Application'
 }
 
 group = 'com.discover.loan'
@@ -153,7 +164,40 @@ sourceCompatibility = '17'
 targetCompatibility = "${sourceCompatibility}"
 
 
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+
+    bddImplementation.extendsFrom testImplementation
+}
+
+
 // ===== Testing =====
+sourceSets {
+    // test {
+    //     resources {
+    //         srcDir file('src/test/java')
+    //         exclude '**/*.java'
+    //     }
+    // }
+
+    bdd {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+        resources {
+            srcDir file('src/bdd/features')
+            exclude '**/*.java'
+        }
+    }
+}
+
+
+
 // --- Unit Testing
 test {
     // finalizedBy jacocoTestReport
@@ -182,6 +226,24 @@ check {
 //     }
 // }
 
+// --- BDD Testing
+task bdd(type: Test) {
+    group 'Verification'
+    description 'runs the BDD tests with Cucumber/Selenium/Karate'
+
+    testClassesDirs = sourceSets.bdd.output.classesDirs
+    classpath       = sourceSets.bdd.runtimeClasspath
+
+    mustRunAfter test
+	useJUnitPlatform()
+
+    // pull karate options into the runtime
+    systemProperty "karate.options", System.properties.getProperty("karate.options")
+    // pull karate env into the runtime
+    systemProperty "karate.env", System.properties.getProperty("karate.env")
+    // ensure tests are always run
+    outputs.upToDateWhen { false }
+}
 
 // ===== Static Code Analysis =====
 
@@ -229,7 +291,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value   = 'COVEREDRATIO'
-                minimum = 0.8
+                minimum = 0.5
             }
         }
 
@@ -241,7 +303,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'TOTALCOUNT'
-                maximum = 0.8
+                maximum = 0.5
             }
         }
     }
@@ -277,4 +339,14 @@ pitest {
     withHistory = true
     // mutators = ['DEFAULTS', 'STRONGER', 'ALL']
     mutators = ['DEFAULTS', 'STRONGER' ]
+}
+
+
+
+// ##### Run the service
+bootRun {
+    if (project.hasProperty('args')) {
+        args project.args.split(',')
+    }
+    systemProperties = System.properties
 }

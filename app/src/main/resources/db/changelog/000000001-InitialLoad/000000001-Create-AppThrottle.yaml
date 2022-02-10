@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: '000000001.00001'
+      author: kevin
+      changes:
+        - createTable:
+            tableName: app_throttle
+            columns:
+              - column:
+                  name: application_id
+                  type: char(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: model_ind
+                  type: boolean
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: strategy_ind
+                  type: boolean
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: pricing_ind
+                  type: boolean
+                  constraints:
+                    primaryKey: true
+                    nullable: false

@@ -11,10 +11,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @SpringBootApplication
 @EnableJpaRepositories( "com.discover.loan" )
-public final class Application
+public class Application
 {
 
-    private Application()
+    public Application()
     {
         // Prevent instantiation other than by main().
     }
