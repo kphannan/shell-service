@@ -71,6 +71,11 @@ management:
           fatal: 503
           down: 503
           out-of-service: 503
+      group:
+        liveness:
+          include: ping, diskSpace
+        readiness:
+          include: db
 
   endpoints:
     web:

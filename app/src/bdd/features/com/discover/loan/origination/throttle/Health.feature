@@ -17,11 +17,21 @@ Feature: Health, Liveness, Readiness probes
          Then status <response>
 
         Examples:
-        | target    | method | response |
-        | '/health' | GET    | 242      |
-        | '/health' | PUT    | 405      |
-        | '/health' | POST   | 405      |
-        | '/health' | DELETE | 405      |
+        | target              | method | response |
+        | '/health'           | GET    | 242      |
+        | '/health'           | PUT    | 405      |
+        | '/health'           | POST   | 405      |
+        | '/health'           | DELETE | 405      |
+
+        | '/health/liveness'  | GET    | 200      |
+        | '/health/liveness'  | PUT    | 405      |
+        | '/health/liveness'  | POST   | 405      |
+        | '/health/liveness'  | DELETE | 405      |
+
+        | '/health/readiness' | GET    | 200      |
+        | '/health/readiness' | PUT    | 405      |
+        | '/health/readiness' | POST   | 405      |
+        | '/health/readiness' | DELETE | 405      |
 
 
     # ----- (GET)  -----
@@ -32,8 +42,27 @@ Feature: Health, Liveness, Readiness probes
         Given path '/health'
          When method GET
          Then status 242
+          And match $.components.refreshScope.status == 'UP'
           And match $.status == 'UNKNOWN'
         #   And match $ contains { "status": 'UP' }
+
+    @SmokeTest
+    @PostDeployment
+    Scenario: Liveness probe is only a ping indicator
+        Given path '/health/liveness'
+         When method GET
+         Then status 200
+          And match $.components.ping.status == 'UP'
+          And match $.status == 'UP'
+
+    @SmokeTest
+    @PostDeployment
+    Scenario: Readiness probe includes database indicator
+        Given path '/health/readiness'
+         When method GET
+         Then status 200
+          And match $.components.db.status == 'UP'
+          And match $.status == 'UP'
 
 
     # ----- (GET)  -----
