@@ -140,6 +140,8 @@ dependencies {
     testImplementation( "com.intuit.karate:karate-junit5:${karateVersion}" )
 
     // --- Reporting
+    implementation( "net.masterthought:cucumber-reporting:5.6.1" )
+
 
     // ===== Documentation =====
     // --- Config properties

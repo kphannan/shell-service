@@ -1,6 +1,7 @@
 ### ===== Gradle
 .gradle
 **/build/
+**/target/
 !src/**/build/
 
 # Ignore Gradle GUI config
