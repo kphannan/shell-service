@@ -1,0 +1,40 @@
+
+
+### --- Partner service configuration
+partner-services:
+  foo: footext
+  channelId: channelIdtext
+  applicationId: appIdText
+
+  services:
+    - name: service1
+      host: host1.some.domain
+      path: base/path/without/leading/slash
+      # health-endpoint: /health
+
+    - name: service2
+      host: host2.some.domain
+      certificate:
+        keystoreFilename: foo.jks
+        username: keyUser
+        password: keyPass
+
+    - name: service3
+      host: host3.some.domain
+
+  soapServices:
+    - name: soapService1
+      host: host1.some.domain
+      # health-endpoint: /health
+
+    - name: soapService2
+      host: host2.some.domain
+      port: 1234
+      path: /base/path
+      clientPolicy:
+        connectTimeout: 100
+        maxRetries: 5
+        timeout: 200
+        maxElapsedTime: 900
+        useAsyncStrategy: false
+

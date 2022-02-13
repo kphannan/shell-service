@@ -127,6 +127,7 @@ dependencies {
 
 
     // ===== Quality Assurance =====
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // --- Static Analysis
     // --- PMD
     // --- Style

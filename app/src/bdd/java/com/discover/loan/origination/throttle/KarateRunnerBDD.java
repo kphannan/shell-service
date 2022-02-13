@@ -9,7 +9,11 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class KarateRunnerBDD
 {
-
+    /**
+     * Execute all feature files from this package level and downward.
+     *
+     * @return something that isn't used.
+     */
     @Karate.Test
     public Karate testAll()
     {

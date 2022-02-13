@@ -83,8 +83,21 @@ management:
       exposure:
         include: '*'
 
+  info:
+    build:
+      enabled: true
+    java:
+      enabled: true
+    git:
+      enabled: true
+      mode: "full"
 
-
+info:
+  app:
+    encoding: "@project.build.sourceEncoding@"
+    java:
+      source: "@java.version@"
+      target: "@java.version@"
 
 
 ##### Application specific properties
@@ -106,3 +119,39 @@ datasource:
   url: jdbc:h2:mem:testdb;MODE=Mysql;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
   driver:
     classname: org.h2.Driver
+
+
+### --- Partner service configuration
+partner-services:
+  services:
+    - name: service1
+      host: host1.some.domain
+      path: base/path/without/leading/slash
+      # health-endpoint: /health
+
+    - name: service2
+      host: host2.some.domain
+      certificate:
+        keystoreFilename: foo.jks
+        username: keyUser
+        password: keyPass
+
+    - name: service3
+      host: host3.some.domain
+
+  soapServices:
+    - name: soapService1
+      host: host1.some.domain
+      # health-endpoint: /health
+
+    - name: soapService2
+      host: host2.some.domain
+      port: 1234
+      path: /base/path
+      clientPolicy:
+        connectTimeout: 100
+        maxRetries: 5
+        timeout: 200
+        maxElapsedTime: 900
+        useAsyncStrategy: false
+
