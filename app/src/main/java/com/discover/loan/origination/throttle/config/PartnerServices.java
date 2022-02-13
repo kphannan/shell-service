@@ -1,5 +1,6 @@
 package com.discover.loan.origination.throttle.config;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
@@ -7,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import org.apache.http.client.utils.URIBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
@@ -58,31 +60,27 @@ public class PartnerServices
      */
     private void buildUri( final ServiceInfo serviceInfo )
     {
-        if ( null != serviceInfo )
+        final URIBuilder uriBuilder = new URIBuilder();
+        uriBuilder.setScheme( serviceInfo.certificate == null ? "http" : "https" )
+                  .setHost( serviceInfo.host )
+                  .setPath( serviceInfo.path );
+
+        try
         {
-            StringBuilder uri = new StringBuilder( serviceInfo.certificate == null ? "http://" : "https://" );
+            uriBuilder.setPort( Integer.valueOf( serviceInfo.port ) );
+        }
+        catch ( NumberFormatException nfe )
+        {
+            uriBuilder.setPort( -1 );
+        }
 
-            uri.append( serviceInfo.host );
-
-            // Process optional port
-            if ( null != serviceInfo.port && !serviceInfo.port.isBlank() )
-            {
-                uri.append( ":" + serviceInfo.port );
-            }
-
-            // Append optional path
-            if ( null != serviceInfo.path )
-            {
-                String buffer = serviceInfo.path.trim();
-                if ( buffer.charAt( 0 ) != '/' )
-                {
-                    uri.append( '/' );
-                }
-
-                uri.append( buffer );
-            }
-
-            serviceInfo.uri = uri.toString();
+        try
+        {
+            serviceInfo.uri = uriBuilder.build().toString();
+        }
+        catch ( URISyntaxException e )
+        {
+            log.error( e );
         }
     }
 
@@ -142,24 +140,21 @@ public class PartnerServices
 
     private void logPartnerServices()
     {
-        if ( log.isInfoEnabled() )
+        log.info( "----- Examine the parter service list -----" );
+
+        if ( null != services )
         {
-            log.info( "----- Examine the parter service list -----" );
-
-            if ( null != services )
-            {
-                log.info( "   -- Services --" );
-                services.forEach( log::info );
-            }
-
-            if ( null != soapServices )
-            {
-                log.info( "   -- SOAP Services --" );
-                soapServices.forEach( log::info );
-            }
-
-            log.info( "----- End of service configuration -----" );
+            log.info( "   -- Services --" );
+            services.forEach( log::info );
         }
+
+        if ( null != soapServices )
+        {
+            log.info( "   -- SOAP Services --" );
+            soapServices.forEach( log::info );
+        }
+
+        log.info( "----- End of service configuration -----" );
     }
 
 }
