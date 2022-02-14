@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import com.discover.loan.origination.throttle.config.PartnerServices.ServiceInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,11 +96,25 @@ class PartnerServicesTest
                   , () -> assertEquals( 333, partnerServices.getSoapServices().get( 1 ).getClientPolicy().getTimeout() )
                   , () -> assertEquals( 222, partnerServices.getSoapServices().get( 1 ).getClientPolicy().getMaxRetries() )
                   , () -> assertEquals( "https://host2:9876/secure/soap", partnerServices.getSoapServices().get( 1 ).getUri() )
-
         );
     }
 
+    @Test
+    void partnerServices_lookupService_returnsServiceInfo()
+    {
+        final ServiceInfo info = PartnerServices.getServiceInfo( "service2" );
 
+        assertAll(  () -> assertNotNull( info ) );
+    }
+
+
+    @Test
+    void partnerServices_lookupSoapService_returnsServiceInfo()
+    {
+        final ServiceInfo info = PartnerServices.getSoapServiceInfo( "service1" );
+
+        assertAll(  () -> assertNotNull( info ) );
+    }
 }
 
 

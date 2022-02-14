@@ -76,6 +76,8 @@ management:
           include: ping, diskSpace
         readiness:
           include: db
+      # PartnerServices:
+      #   enabled: true
 
   endpoints:
     web:
@@ -83,14 +85,14 @@ management:
       exposure:
         include: '*'
 
-  info:
-    build:
-      enabled: true
-    java:
-      enabled: true
-    git:
-      enabled: true
-      mode: "full"
+  # info:
+  #   build:
+  #     enabled: true
+  #   java:
+  #     enabled: true
+  #   git:
+  #     enabled: true
+  #     mode: "full"
 
 info:
   app:

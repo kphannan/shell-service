@@ -1,7 +1,10 @@
 package com.discover.loan.origination.throttle.config;
 
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
 import lombok.AccessLevel;
@@ -34,6 +37,21 @@ public class PartnerServices
     private List<ServiceInfo>     services;
     private List<ServiceInfo>     soapServices;
 
+    private static Map<String, ServiceInfo> serviceLookup     = new HashMap<>();
+    private static Map<String, ServiceInfo> soapServiceLookup = new HashMap<>();
+
+
+    public static ServiceInfo getServiceInfo( final String name )
+    {
+        return serviceLookup.get( name );
+    }
+
+    public static ServiceInfo getSoapServiceInfo( final String name )
+    {
+        return soapServiceLookup.get( name );
+    }
+
+
 
     @PostConstruct
     private void init() // NOPMD
@@ -41,12 +59,13 @@ public class PartnerServices
         // Build out the transient elements....
         if ( null != soapServices )
         {
-            soapServices.forEach( this::buildUri );
+            soapServices.forEach( svc -> { buildUri( svc ); soapServiceLookup.put( svc.getName(), svc ); } );
         }
 
         if ( null != services )
         {
-            services.forEach( this::buildUri );
+            // services.forEach( this::buildUri );
+            services.forEach( svc -> { buildUri( svc ); serviceLookup.put( svc.getName(), svc ); } );
         }
 
         logPartnerServices();
