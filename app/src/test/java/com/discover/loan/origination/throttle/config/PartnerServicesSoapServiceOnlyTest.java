@@ -58,7 +58,7 @@ class PartnerServicesSoapServiceOnlyTest
                   , () -> assertEquals( 333, partnerServices.getSoapServices()
                                                   .get( 0 ).getClientPolicy().getMaxRetries() )
                   , () -> assertEquals(  "https://soaphost2:4567/secure/soap"
-                                       , partnerServices.getSoapServices().get( 0 ).getUri() )
+                                       , partnerServices.getSoapServices().get( 0 ).getUri().toString() )
 
         );
     }

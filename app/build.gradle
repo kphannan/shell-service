@@ -139,7 +139,8 @@ dependencies {
     testRuntimeOnly( 'org.pitest:pitest-junit5-plugin:0.15' )
     // --- BDD
     testImplementation( "com.intuit.karate:karate-junit5:${karateVersion}" )
-
+    // --- Validate log output
+    testImplementation 'io.github.hakky54:logcaptor:2.7.8'
     // --- Reporting
     implementation( "net.masterthought:cucumber-reporting:5.6.1" )
 
@@ -330,7 +331,7 @@ jacocoTestReport {
 
 // --- Mutation Tests
 pitest {
-    verbose = false
+    verbose = true
     // testSourceSets = [sourceSets.test]
     // mainSourceSets = [sourceSets.main]
     targetClasses = ['com.discover.loan.*']  //by default "${project.group}.*"
@@ -341,7 +342,8 @@ pitest {
     timestampedReports = false
     withHistory = true
     // mutators = ['DEFAULTS', 'STRONGER', 'ALL']
-    mutators = ['DEFAULTS', 'STRONGER' ]
+    // mutators = ['DEFAULTS', 'STRONGER' ]
+    mutators = ['DEFAULTS' ]
 }
 
 

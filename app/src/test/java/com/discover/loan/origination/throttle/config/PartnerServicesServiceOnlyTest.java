@@ -49,7 +49,8 @@ class PartnerServicesServiceOnlyTest
                                        , partnerServices.getServices().get( 0 ).getCertificate().getUsername() )
                   , () -> assertEquals(  "keypass"
                                        , partnerServices.getServices().get( 0 ).getCertificate().getPassword() )
-                  , () -> assertEquals( "https://host2.some.domain/service/path", partnerServices.getServices().get( 0 ).getUri() )
+                  , () -> assertEquals(  "https://host2.some.domain/service/path"
+                                       , partnerServices.getServices().get( 0 ).getUri().toString() )
 
         );
     }

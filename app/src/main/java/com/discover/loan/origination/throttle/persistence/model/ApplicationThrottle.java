@@ -8,6 +8,19 @@ import javax.persistence.Table;
 import lombok.Data;
 
 
+
+/*
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
+    @SequenceGenerator( name = "app_throttle_sequence"
+                       , sequenceName = "app_throttle_sequence"
+                       , allocationSize = 1
+    )
+    @GeneratedValue( strategy = GenerationType.SEQUENCE
+                    , generator = "app_throttle_sequence" )
+ */
+
 /**
  * Entity definition for the Throttle Status table.
  */

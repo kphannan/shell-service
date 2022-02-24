@@ -3,6 +3,7 @@ package com.discover.loan.origination.throttle;
 import com.discover.GeneratedIgnoreCoverage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 

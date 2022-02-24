@@ -1,10 +1,10 @@
 package com.discover.loan.origination.throttle.config;
 
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.PostConstruct;
 
 import lombok.AccessLevel;
@@ -37,15 +37,27 @@ public class PartnerServices
     private List<ServiceInfo>     services;
     private List<ServiceInfo>     soapServices;
 
-    private static Map<String, ServiceInfo> serviceLookup     = new HashMap<>();
-    private static Map<String, ServiceInfo> soapServiceLookup = new HashMap<>();
+    private static Map<String, ServiceInfo> serviceLookup     = new ConcurrentHashMap<>();
+    private static Map<String, ServiceInfo> soapServiceLookup = new ConcurrentHashMap<>();
 
 
+    /**
+     * Lookup {@code ServiceInfo} based on a REST service's configured name.
+     *
+     * @param name the configuration's name of the service.
+     * @return the {@code ServiceInfo} or null if the named service is not defined.
+     */
     public static ServiceInfo getServiceInfo( final String name )
     {
         return serviceLookup.get( name );
     }
 
+    /**
+     * Lookup {@code ServiceInfo} based on a SOAP service's configured name.
+     *
+     * @param name the configuration's name of the service.
+     * @return the {@code ServiceInfo} or null if the named service is not defined.
+     */
     public static ServiceInfo getSoapServiceInfo( final String name )
     {
         return soapServiceLookup.get( name );
@@ -59,13 +71,21 @@ public class PartnerServices
         // Build out the transient elements....
         if ( null != soapServices )
         {
-            soapServices.forEach( svc -> { buildUri( svc ); soapServiceLookup.put( svc.getName(), svc ); } );
+            soapServices.forEach( svc ->
+            {
+                buildUri( svc );
+                soapServiceLookup.put( svc.getName(), svc );
+            } );
         }
 
         if ( null != services )
         {
             // services.forEach( this::buildUri );
-            services.forEach( svc -> { buildUri( svc ); serviceLookup.put( svc.getName(), svc ); } );
+            services.forEach( svc ->
+            {
+                buildUri( svc );
+                serviceLookup.put( svc.getName(), svc );
+            } );
         }
 
         logPartnerServices();
@@ -95,7 +115,7 @@ public class PartnerServices
 
         try
         {
-            serviceInfo.uri = uriBuilder.build().toString();
+            serviceInfo.uri = uriBuilder.build();
         }
         catch ( URISyntaxException e )
         {
@@ -126,7 +146,7 @@ public class PartnerServices
         private ClientPolicy    clientPolicy;   //< Optional policy details (timeouts, retries, etc.)
 
         @Setter( AccessLevel.NONE )
-        private String uri;                     //< Constructed URI from host, port, certificate details
+        private URI uri;                     //< Constructed URI from host, port, certificate details
     }
 
 
@@ -159,7 +179,7 @@ public class PartnerServices
 
     private void logPartnerServices()
     {
-        log.info( "----- Examine the parter service list -----" );
+        log.info( "----- Examine the partner service list -----" );
 
         if ( null != services )
         {

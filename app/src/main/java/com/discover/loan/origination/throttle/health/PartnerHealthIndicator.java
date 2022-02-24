@@ -10,23 +10,37 @@ import org.springframework.stereotype.Component;
 
 
 
-
+/**
+ * Base class for a downstream REST service health indicator.
+ * Information from {@code PartnerServices} gives the address of a partner
+ * REST service is used to invoke it's /health endpoint.
+ */
 @Component
-@ConditionalOnEnabledHealthIndicator("PartnerServices")
+@ConditionalOnEnabledHealthIndicator( "PartnerServices" )
 @Log4j2
-public class PartnerHealthIndicator implements HealthIndicator
+public abstract class PartnerHealthIndicator implements HealthIndicator
 {
 
     @Override
     public Health health()
     {
         log.info( "Custom health indicator" );
-        Health.Builder status = Health.up();
+        final Health.Builder status = Health.up();
 
-        status.withDetail( "name", "service1" )
-              .withDetail( "uri", PartnerServices.getServiceInfo( "service1" ).getUri() );
+        final PartnerServices.ServiceInfo serviceInfo = PartnerServices.getServiceInfo( getServiceName() );
+
+        status.withDetail( "name", serviceInfo.getName() )
+              .withDetail( "uri", serviceInfo.getUri() );
+
+        // Call the /health endpoint of the named service
 
         return status.build();
     }
 
+    /**
+     * Derived class will supply the name of the service as defined in configuration.
+     *
+     * @return the name of the service.
+     */
+    protected abstract String getServiceName();
 }

@@ -13,7 +13,7 @@ public interface ThrottleRepository extends PagingAndSortingRepository<Applicati
 {
 
     /**
-     * Retrieve all {@code Airport} records by {@code Page}.
+     * Retrieve all {@code ApplicationThrottle} records by {@code Page}.
      *
      * @param paging the {@code Page} criteria.
      * @return the located page, whose body contains the found records.
