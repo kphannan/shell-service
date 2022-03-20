@@ -12,12 +12,20 @@ import org.springframework.stereotype.Service;
 
 
 
+/**
+ * Business logic.
+ */
 @Service
 public class ThrottleService
 {
     private final ThrottleRepository repository;
 
 
+    /**
+     * Create a service instance autowired to a repository.
+     *
+     * @param repository the persistent repository.
+     */
     @Autowired
     public ThrottleService( final ThrottleRepository repository )
     {
@@ -25,11 +33,22 @@ public class ThrottleService
     }
 
 
+    /**
+     * Find all entries based on the search and page criteria.
+     *
+     * @param paging page and search criterial.
+     * @return the requested result page.
+     */
     public Page<ApplicationThrottle> findAll( final Pageable paging )
     {
         return repository.findAll( paging );
     }
 
+    /**
+     * Calculate the rating.
+     * @param request the input.
+     * @return the output.
+     */
     public ThrottleResponse rateApplication( final ThrottleRequestVO request )
     {
         final ThrottleResponse response = new ThrottleResponse();

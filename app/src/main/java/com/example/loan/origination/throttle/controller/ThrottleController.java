@@ -7,11 +7,9 @@ import java.nio.charset.StandardCharsets;
 import com.example.loan.origination.throttle.controller.model.ThrottleRequestVO;
 import com.example.loan.origination.throttle.controller.model.ThrottleResponse;
 import com.example.loan.origination.throttle.persistence.model.ApplicationThrottle;
-//import com.example.loan.origination.throttle.persistence.repository.ThrottleRepository;
 import com.example.loan.origination.throttle.persistence.repository.ThrottleRepository;
 import com.example.loan.origination.throttle.service.ThrottleService;
 import lombok.extern.log4j.Log4j2;
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -36,11 +34,13 @@ public class ThrottleController
     private final ThrottleService    service;
 
 
-//    ThrottleController( final ThrottleRepository repository )
-//    {
-//        this.repository = repository;
-//    }
-//    @Autowired
+
+    /**
+     * Construct the controller with autowired resources.
+     *
+     * @param service service (business layer) implementation
+     * @param repository persistence (JPA) repository
+     */
     public ThrottleController( final ThrottleService service, final ThrottleRepository repository )
     {
         this.service = service;
@@ -62,7 +62,6 @@ public class ThrottleController
     public ResponseEntity<ThrottleResponse> rateApplication( @RequestBody final ThrottleRequestVO request )
     {
         // Handle the request
-//        final ThrottleResponse response = service.rateApplication( request );
         final ThrottleResponse response = new ThrottleResponse();
 
         response.setApplicationId( request.getAppId() );
@@ -71,7 +70,7 @@ public class ThrottleController
         response.setThrottlePriceInd( request.getOfferCode() );
 
         // Formulate the API response
-        HttpHeaders responseHeaders = new HttpHeaders();
+        final HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add( HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.toString() );
         URI location = null;
         try

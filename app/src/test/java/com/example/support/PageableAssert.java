@@ -13,12 +13,12 @@ import org.springframework.data.domain.Sort;
 public class PageableAssert extends AbstractAssert<PageableAssert, Pageable>
 {
 
-    PageableAssert( Pageable pageable )
+    PageableAssert( final Pageable pageable )
     {
         super( pageable, PageableAssert.class );
     }
 
-    public static PageableAssert assertThat( Pageable actual )
+    public static PageableAssert assertThat( final Pageable actual )
     {
         return new PageableAssert( actual );
     }
@@ -30,12 +30,13 @@ public class PageableAssert extends AbstractAssert<PageableAssert, Pageable>
      * @param expectedPageSize desired page size
      * @return this assertion for chaining.
      */
-    public PageableAssert hasPageSize( int expectedPageSize )
+    public PageableAssert hasPageSize( final int expectedPageSize )
     {
         if ( !Objects.equals( actual.getPageSize(), expectedPageSize ) )
         {
             failWithMessage( "expected page size to be <%s> but was <%s>", expectedPageSize, actual.getPageSize() );
         }
+
         return this;
     }
 
@@ -46,12 +47,13 @@ public class PageableAssert extends AbstractAssert<PageableAssert, Pageable>
      * @param expectedPageNumber the desired page number
      * @return this assertion for chaining.
      */
-    public PageableAssert hasPageNumber( int expectedPageNumber )
+    public PageableAssert hasPageNumber( final int expectedPageNumber )
     {
         if ( !Objects.equals( actual.getPageNumber(), expectedPageNumber ) )
         {
             failWithMessage( "expected page number to be <%s> but was <%s>", expectedPageNumber, actual.getPageNumber() );
         }
+
         return this;
     }
 
@@ -62,9 +64,9 @@ public class PageableAssert extends AbstractAssert<PageableAssert, Pageable>
      * @param direction the intended sort direction.
      * @return this assertion for method chaining.
      */
-    public PageableAssert hasSort( String field, Sort.Direction direction )
+    public PageableAssert hasSort( final String field, final Sort.Direction direction )
     {
-        Sort.Order actualOrder = actual.getSort().getOrderFor( field );
+        final Sort.Order actualOrder = actual.getSort().getOrderFor( field );
 
         if ( actualOrder == null )
         {

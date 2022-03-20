@@ -2,6 +2,7 @@ package com.example.loan.origination.throttle.config;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,13 +29,22 @@ import org.springframework.stereotype.Component;
 @Component
 @RefreshScope
 @Data
+@Setter( AccessLevel.MODULE )
 @Log4j2
 public class PartnerServices
 {
-    private String                foo;
     private String                channelId;        //< default channel ID
-    private String                applicationId;    //< default application id
+    /**
+     * Logical name of the service.  This name is used in logs and cross service tracing.
+     */
+    private String                applicationId;
+    /**
+     * An optional list of configured partner REST services.
+     */
     private List<ServiceInfo>     services;
+    /**
+     * An optional list of configured partner SOAP services.
+     */
     private List<ServiceInfo>     soapServices;
 
     private static Map<String, ServiceInfo> serviceLookup     = new ConcurrentHashMap<>();
@@ -63,6 +73,25 @@ public class PartnerServices
         return soapServiceLookup.get( name );
     }
 
+    /**
+     * Get the list of REST services, but only as an immutable collection.
+     *
+     * @return immutable list of services.
+     */
+    public List<ServiceInfo>     getServices()
+    {
+        return services == null ? null : Collections.unmodifiableList( services );
+    }
+
+    /**
+     * Get the list of SOAP services, but only as an immutable collection.
+     *
+     * @return immutable list of services.
+     */
+    public List<ServiceInfo>     getSoapServices()
+    {
+        return soapServices == null ? null : Collections.unmodifiableList( soapServices );
+    }
 
 
     @PostConstruct

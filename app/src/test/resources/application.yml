@@ -35,7 +35,7 @@ logging:
     root: INFO
 
     com:
-      discover:
+      example:
         loan: INFO
 
     # org:

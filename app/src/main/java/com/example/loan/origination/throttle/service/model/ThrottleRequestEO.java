@@ -4,7 +4,9 @@ import com.example.loan.origination.throttle.controller.model.ThrottleRequestVO;
 import com.example.loan.origination.throttle.model.ThrottleRequest;
 import lombok.Data;
 
-
+/**
+ * Business layer domain object.
+ */
 @Data
 public class ThrottleRequestEO implements ThrottleRequest
 {
@@ -65,56 +67,51 @@ public class ThrottleRequestEO implements ThrottleRequest
     }
 
     @Override
-    public void setAppType( int appType )
+    public void setAppType( final int appType )
     {
         adaptee.setAppType( appType );
     }
 
     @Override
-    public void setAppId( String appId )
+    public void setAppId( final String appId )
     {
         adaptee.setAppId( appId );
     }
 
     @Override
-    public void setReengagementInd( int reengagementInd )
+    public void setReengagementInd( final int reengagementInd )
     {
         adaptee.setReengagementInd( reengagementInd );
     }
 
     @Override
-    public void setOfferMatch( int offerMatch )
+    public void setOfferMatch( final int offerMatch )
     {
         adaptee.setOfferMatch( offerMatch );
     }
 
     @Override
-    public void setOfferCode( int offerCode )
+    public void setOfferCode( final int offerCode )
     {
         adaptee.setOfferCode( offerCode );
     }
 
     @Override
-    public void setPrefilledAppId( String prefilledAppId )
+    public void setPrefilledAppId( final String prefilledAppId )
     {
         adaptee.setPrefilledAppId( prefilledAppId );
     }
 
     @Override
-    public void setSecondaryFlow( boolean secondaryFlow )
+    public void setSecondaryFlow( final boolean secondaryFlow )
     {
         adaptee.setSecondaryFlow( secondaryFlow );
     }
 
     @Override
-    public void setChannelType( String channelType )
+    public void setChannelType( final String channelType )
     {
         adaptee.setChannelType( channelType );
     }
 
-//    @Override
-//    public boolean canEqual( Object other )
-//    {
-//        return adaptee.canEqual( other );
-//    }
 }

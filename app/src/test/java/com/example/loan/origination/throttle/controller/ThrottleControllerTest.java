@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-//import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
-//import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -116,28 +114,14 @@ class ThrottleControllerTest
     @Test
     void throttleController_eligiblePOST_returnsResponse() throws Exception
     {
-
-        // mvc.perform( get("/index")
-        //                     .contentType(MediaType.APPLICATION_JSON))
-        //     .andExpect( status().isOk())
-        //     .andExpect( content().contentTypeCompatibleWith("application/json"))
-        //     .andExpect( jsonPath("$.greeting").value("Hello World"));
-
-//        final ThrottleRequest request = new ThrottleRequest();
-//        request.setAppType( 1 );        // should be enum
-//        request.setAppId( "01234567890123456" );
-//        request.setChannelType( "chan" );
-//        request.setOfferCode( 0 );
-//        request.setOfferMatch( 0 );
-
-        final String requestJson = "{" +
-                "   \"appType\": 1," +
-                "   \"appId\":  \"0000000000000002\"," +
-                "   \"reengagementInd\": 1," +
-                "   \"offerMatch\": 2," +
-                "   \"offerCode\": 1," +
-                "   \"channelType\": \"chan01\"" +
-                "}";
+        final String requestJson = "{"
+                + "   \"appType\": 1,"
+                + "   \"appId\":  \"0000000000000002\","
+                + "   \"reengagementInd\": 1,"
+                + "   \"offerMatch\": 2,"
+                + "   \"offerCode\": 1,"
+                + "   \"channelType\": \"chan01\""
+                + "}";
         final MockHttpServletResponse response =
                 mvc.perform( post( "/loan/origination/throttle/eligible" )
                                      .contentType( MediaType.APPLICATION_JSON )
@@ -150,22 +134,18 @@ class ThrottleControllerTest
                    .andExpect( header().string( HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString() ) )
                    .andExpect( header().string( HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.toString() ) )
                    // .andExpect( content().contentTypeCompatibleWith( "application/json" ) )
-                   .andExpect( jsonPath( "$.applicationId" ).value("0000000000000002" ) )
-                   .andExpect( jsonPath( "$.throttleModelInd" ).value(1 ) )
-                   .andExpect( jsonPath( "$.throttleStrategyInd" ).value(2 ) )
-                   .andExpect( jsonPath( "$.throttlePriceInd" ).value(1 ) )
+                   .andExpect( jsonPath( "$.applicationId" ).value( "0000000000000002" ) )
+                   .andExpect( jsonPath( "$.throttleModelInd" ).value( 1 ) )
+                   .andExpect( jsonPath( "$.throttleStrategyInd" ).value( 2 ) )
+                   .andExpect( jsonPath( "$.throttlePriceInd" ).value( 1 ) )
                    // .andExpect( content().contentType( MediaType.APPLICATION_JSON_VALUE ) )
                    .andReturn().getResponse();
 
         // verify( repository ).findAll( any( PageRequest.class ) );
 
         assertAll(  () -> assertNotNull( response )
-                , () -> assertNotNull( response.getContentAsString() )
-                    //   , () -> verify( repository ).findAll( pageableCaptor.capture() )
-                 );
-
-
+                  , () -> assertNotNull( response.getContentAsString() )
+        );
     }
-
 
 }

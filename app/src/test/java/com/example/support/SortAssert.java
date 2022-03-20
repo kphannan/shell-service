@@ -10,12 +10,12 @@ import org.springframework.data.domain.Sort;
 public class SortAssert extends AbstractAssert<SortAssert, Sort>
 {
 
-    SortAssert( Sort sort )
+    SortAssert( final Sort sort )
     {
         super( sort, SortAssert.class );
     }
 
-    public static SortAssert assertThat( Sort actual )
+    public static SortAssert assertThat( final Sort actual )
     {
         return new SortAssert( actual );
     }
@@ -27,9 +27,9 @@ public class SortAssert extends AbstractAssert<SortAssert, Sort>
      * @param direction the intended collation sequence.
      * @return this for assertion chaining.
      */
-    public SortAssert hasSort( String field, Sort.Direction direction )
+    public SortAssert hasSort( final String field, final Sort.Direction direction )
     {
-        Sort.Order actualOrder = actual.getOrderFor( field );
+        final Sort.Order actualOrder = actual.getOrderFor( field );
 
         if ( actualOrder == null )
         {

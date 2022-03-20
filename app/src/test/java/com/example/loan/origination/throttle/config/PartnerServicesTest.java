@@ -55,7 +55,6 @@ class PartnerServicesTest
     @Test
     void partnerServices_propertyBinding_establishesDefaultState()
     {
-
         assertAll(  () -> assertNotNull( partnerServices )
                   , () -> assertNotNull( partnerServices.getServices() )
 
@@ -126,15 +125,15 @@ class PartnerServicesTest
                   , () -> assertEquals(  "https://host2:9876/secure/soap"
                                        , partnerServices.getSoapServices().get( 1 ).getUri().toString() )
 
-                  //   , () -> assertThat( logCaptor.getInfoLogs() ).containsExactly( "foo" )
-                  //   , () -> assertThat( logCaptor.getInfoLogs() ).contains( "----- Examine the partner service list -----" )
-                  //   , () -> assertThat( logCaptor.getInfoLogs() ).contains( "   -- Services --" )
+                  //    , () -> assertThat( logCaptor.getInfoLogs() ).containsExactly( "foo" )
+                  //    , () -> assertThat( logCaptor.getInfoLogs() ).contains( "----- Examine the partner service list -----" )
+                  //    , () -> assertThat( logCaptor.getInfoLogs() ).contains( "   -- Services --" )
 
                   //    , () -> assertThat( logCaptor.getInfoLogs() ).contains( "PartnerServices.ServiceInfo(name=service1, host=host1.some.domain, port=null, path=base/path/without/leading/slash, certificate=null, clientPolicy=null, uri=http://host1.some.domain/base/path/without/leading/slash)" )
                   //    , () -> assertThat( logCaptor.getInfoLogs() ).contains( "PartnerServices.ServiceInfo(name=service2, host=host2.some.domain, port=null, path=null, certificate=PartnerServices.CertificateInfo(keystoreFilename=foo.jks, username=keyUser, password=keyPass), clientPolicy=null, uri=https://host2.some.domain)" )
                   //    , () -> assertThat( logCaptor.getInfoLogs() ).contains( "PartnerServices.ServiceInfo(name=service3, host=host3.some.domain, port=null, path=null, certificate=null, clientPolicy=null, uri=http://host3.some.domain)" )
-                  //   , () -> assertThat( logCaptor.getInfoLogs() ).contains( "   -- SOAP Services --" )
-                  //   , () -> assertThat( logCaptor.getInfoLogs() ).contains( "----- End of service configuration -----" )
+                  //    , () -> assertThat( logCaptor.getInfoLogs() ).contains( "   -- SOAP Services --" )
+                  //    , () -> assertThat( logCaptor.getInfoLogs() ).contains( "----- End of service configuration -----" )
         );
     }
 

@@ -1,5 +1,8 @@
 package com.example.loan.origination.throttle.model;
 
+/**
+ * Interface of Domain Object.
+ */
 public interface ThrottleRequest
 {
     int getAppType();
@@ -34,11 +37,6 @@ public interface ThrottleRequest
 
     void setChannelType( String channelType );
 
+    @Override
     boolean equals( Object o );
-
-//    boolean canEqual( Object other );
-//
-//    int hashCode();
-//
-//    String toString();
 }
