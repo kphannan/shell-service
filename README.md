@@ -112,11 +112,11 @@ Files in the test directory tree will mostly duplicate those from the `src` dire
     src
     └── bdd
         ├── features
-        |   └── package (com.discover.loan.origination.throttle)
+        |   └── package (com.example.loan.origination.throttle)
         |       ├── Eligible.feature
         |       └── Health.feature
         ├── java
-        |   └── package (com.discover.loan.origination.throttle)
+        |   └── package (com.example.loan.origination.throttle)
         |       ├── KarateRunnerBDD.java
         └── resources
             └── karate-config.js

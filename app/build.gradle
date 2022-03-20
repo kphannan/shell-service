@@ -159,10 +159,10 @@ dependencyManagement {
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.discover.loan.origination.throttle.Application'
+    mainClass = 'com.example.loan.origination.throttle.Application'
 }
 
-group = 'com.discover.loan'
+group = 'com.example.loan'
 
 sourceCompatibility = '17'
 targetCompatibility = "${sourceCompatibility}"
@@ -334,7 +334,7 @@ pitest {
     verbose = true
     // testSourceSets = [sourceSets.test]
     // mainSourceSets = [sourceSets.main]
-    targetClasses = ['com.discover.loan.*']  //by default "${project.group}.*"
+    targetClasses = ['com.example.loan.*']  //by default "${project.group}.*"
     // targetClasses = ['com.example.security.*']  //by default "${project.group}.*"
     pitestVersion = "${pitVersion}" //not needed when a default PIT version should be used
     threads = 4
