@@ -46,6 +46,7 @@ public class ThrottleService
 
     /**
      * Calculate the rating.
+     *
      * @param request the input.
      * @return the output.
      */
