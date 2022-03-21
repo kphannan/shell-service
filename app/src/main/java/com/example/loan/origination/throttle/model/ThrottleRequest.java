@@ -7,35 +7,43 @@ public interface ThrottleRequest
 {
     int getAppType();
 
-    String getAppId();
-
-    int getReengagementInd();
-
-    int getOfferMatch();
-
-    int getOfferCode();
-
-    String getPrefilledAppId();
-
-    boolean isSecondaryFlow();
-
-    String getChannelType();
-
     void setAppType( int appType );
+
+
+    String getAppId();
 
     void setAppId( String appId );
 
+
+    int getReengagementInd();
+
     void setReengagementInd( int reengagementInd );
+
+
+    int getOfferMatch();
 
     void setOfferMatch( int offerMatch );
 
+
+    int getOfferCode();
+
     void setOfferCode( int offerCode );
+
+
+    String getPrefilledAppId();
 
     void setPrefilledAppId( String prefilledAppId );
 
+
+    boolean isSecondaryFlow();
+
     void setSecondaryFlow( boolean secondaryFlow );
 
+
+    String getChannelType();
+
     void setChannelType( String channelType );
+
 
     @Override
     boolean equals( Object o );
